@@ -25,11 +25,15 @@ zip = args['--zip']
 units = args['--units']
 output = args['--output']
 
+def address_to_coordinates(address)
+  address.gsub!(/[ ]/, '+')
+  @url = GOOGLE_REQUEST + address + KEY
+  @addr_response = HTTParty.get(@url).parsed_response
+  @addr_coords = @addr_response.dig('results')[0].dig('geometry', 'location')
+end
 
-# begin
-#   pp Docopt.docopt(doc, version: '1.2.3')
-# rescue Docopt::Exit => e
-#   puts e.message
-# end
-
-
+def zip_to_coordinates(zip)
+  @url = GOOGLE_REQUEST + zip + KEY
+  @zip_response = HTTParty.get(@url).parsed_response
+  @zip_coords = @zip_response.dig('results')[0].dig('geometry', 'location')
+end

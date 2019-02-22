@@ -12,7 +12,7 @@ Write a command-line application that uses the data to conform to the following 
 
 ```
 Find Store
-  find_store will locate the nearest store (as the vrow flies) from
+  find_store will locate the nearest store (as the crow flies) from
   store-locations.csv, print the matching store address, as well as
   the distance to that store.
 

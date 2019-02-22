@@ -1,6 +1,4 @@
 require 'docopt'
-require 'pp'
-require 'pry'
 require 'httparty'
 require 'csv'
 require 'json'
@@ -57,8 +55,12 @@ def output
     puts JSON.pretty_generate @closest_store
   else
     @store_name = @closest_store.dig('Store Name')
-    @store_address = "#{@closest_store.dig('Address')}, #{@closest_store.dig('City')}, #{@closest_store.dig('State')}, #{@closest_store.dig('Zip Code')}"
-    puts "The nearest store to your provided location is #{@store_name} at #{@store_address} and it is #{@closest_distance} away."
+    @store_address = "#{@closest_store.dig('Address')}, \
+#{@closest_store.dig('City')}, \
+#{@closest_store.dig('State')}, \
+#{@closest_store.dig('Zip Code')}"
+    puts "The nearest store to your provided location is #{@store_name} at \
+#{@store_address} and it is #{@closest_distance} away."
   end
 end
 
@@ -96,19 +98,21 @@ def closest_store(loc1)
   end
 end
 
+def radians(loc1, loc2)
+  rad_per_deg = Math::PI / 180
+  @dlat_rad = (loc2[0] - loc1[0]) * rad_per_deg
+  @dlon_rad = (loc2[1] - loc1[1]) * rad_per_deg
+  @lat1_rad = loc1[0] * rad_per_deg
+  @lat2_rad = loc2[0] * rad_per_deg
+end
 
 def haversine(loc1, loc2)
-  rad_per_deg = Math::PI / 180
-
-  dlat_rad = (loc2[0] - loc1[0]) * rad_per_deg
-  dlon_rad = (loc2[1] - loc1[1]) * rad_per_deg
-
-  lat1_rad = loc1[0] * rad_per_deg
-  lat2_rad = loc2[0] * rad_per_deg
-
-  a = Math.sin(dlat_rad/2)**2 + Math.cos(lat1_rad) * Math.cos(lat2_rad) * (Math.sin(dlon_rad/2)**2)
-  c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
-
+  radians(loc1, loc2)
+  m = Math
+  a = m.sin(@dlat_rad/2)**2 +
+      m.cos(@lat1_rad) * m.cos(@lat2_rad) *
+      (m.sin(@dlon_rad/2)**2)
+  c = 2 * m.atan2(m.sqrt(a), m.sqrt(1 - a))
   c * EARTH_RADIUS_MI
 end
 

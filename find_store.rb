@@ -2,8 +2,10 @@ require 'docopt'
 require 'httparty'
 require 'csv'
 require 'json'
+require 'dotenv/load'
+require 'pry'
 
-doc = <<DOCOPT
+@doc = <<DOCOPT
   Usage:
     #{__FILE__} --address='<address>'
     #{__FILE__} --address='<address>' [--units=(mi|km)] [--output=text|json]
@@ -19,18 +21,19 @@ doc = <<DOCOPT
 DOCOPT
 
 GOOGLE_REQUEST = 'https://maps.googleapis.com/maps/api/geocode/json?address='.freeze
-KEY = '&key=AIzaSyDfg9Hyqk7U5wIJP6ZaWaYkBu5Si35iKQQ'.freeze
+KEY = ENV['KEY']
 EARTH_RADIUS_KM = 6371
 EARTH_RADIUS_MI = 3959
-
-
-@args = Docopt.docopt(doc)
-@address = @args['--address']
-@zip = @args['--zip']
-@units = @args['--units']
-@output = @args['--output']
 @closest_store = {}
 @closest_distance = EARTH_RADIUS_MI
+
+def parse_args
+  @args = Docopt.docopt(@doc)
+  @address = @args['--address']
+  @zip = @args['--zip']
+  @units = @args['--units']
+  @output = @args['--output']
+end
 
 def address_or_zip
   if @address
@@ -65,6 +68,7 @@ def output
 end
 
 def main
+  parse_args
   address_or_zip
   closest_store(@loc1)
   units
@@ -116,4 +120,5 @@ def haversine(loc1, loc2)
   c * EARTH_RADIUS_MI
 end
 
-main
+# main
+# pry

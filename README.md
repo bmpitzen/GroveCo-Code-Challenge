@@ -4,7 +4,7 @@ This is a project designed to find the nearest store to the provided location (a
 
 ## Prerequisites 
 
-This programs makes a few assumptions. This assumes you have Ruby installed on your machine. If you do not, follow the steps [here](https://www.ruby-lang.org/en/documentation/installation/) to install ruby. find_store is also dependent on the following gems: [docopt](https://github.com/docopt/docopt.rb), [httparty](https://github.com/jnunemaker/httparty), [csv](https://github.com/ruby/csv), and [json](https://github.com/ruby/json). To ensure that these are all installed on your machine, run `gem install docopt httparty csv json` in your terminal. 
+This programs makes a few assumptions. This assumes you have Ruby installed on your machine. If you do not, follow the steps [here](https://www.ruby-lang.org/en/documentation/installation/) to install ruby. find_store is also dependent on the following gems: [docopt](https://github.com/docopt/docopt.rb), [httparty](https://github.com/jnunemaker/httparty), [csv](https://github.com/ruby/csv), [json](https://github.com/ruby/json), and [dotenv](https://github.com/bkeepers/dotenv). To ensure that these are all installed on your machine, run `gem install docopt httparty csv json dotenv` in your terminal. 
 
 ## Usage 
 

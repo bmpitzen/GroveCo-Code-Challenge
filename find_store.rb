@@ -43,6 +43,21 @@ def address_or_zip
   end
 end
 
+def zip_to_coordinates(zip)
+  @url = GOOGLE_REQUEST + zip.to_s + KEY
+  @zip_response = HTTParty.get(@url).parsed_response
+  @zip_coords = @zip_response.dig('results')[0].dig('geometry', 'location')
+  @loc1 = @zip_coords['lat'], @zip_coords['lng']
+end
+
+def address_to_coordinates(address)
+  address.gsub!(/[ ]/, '+')
+  @url = GOOGLE_REQUEST + address + KEY
+  @addr_response = HTTParty.get(@url).parsed_response
+  @addr_coords = @addr_response.dig('results')[0].dig('geometry', 'location')
+  @loc1 = @addr_coords['lat'], @addr_coords['lng']
+end
+
 def units
   @closest_distance =
     if @units == 'km'
@@ -75,21 +90,6 @@ def main
   output
 end
 
-def address_to_coordinates(address)
-  address.gsub!(/[ ]/, '+')
-  @url = GOOGLE_REQUEST + address + KEY
-  @addr_response = HTTParty.get(@url).parsed_response
-  @addr_coords = @addr_response.dig('results')[0].dig('geometry', 'location')
-  @loc1 = @addr_coords['lat'], @addr_coords['lng']
-end
-
-def zip_to_coordinates(zip)
-  @url = GOOGLE_REQUEST + zip.to_s + KEY
-  @zip_response = HTTParty.get(@url).parsed_response
-  @zip_coords = @zip_response.dig('results')[0].dig('geometry', 'location')
-  @loc1 = @zip_coords['lat'], @zip_coords['lng']
-end
-
 def closest_store(loc1)
   CSV.foreach './store-locations.csv', headers: true do |row|
     store = row.to_h
@@ -120,5 +120,5 @@ def haversine(loc1, loc2)
   c * EARTH_RADIUS_MI
 end
 
-# main
+main
 # pry

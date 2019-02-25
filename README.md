@@ -8,6 +8,10 @@ This programs makes a few assumptions. This assumes you have Ruby installed on y
 
 ## Usage 
 
+To run this program, first navigate in your terminal to the directory that the `find_store.rb` file is in. Then, in your terminal enter `ruby find_store.rb` along with any options. Example: `ruby find_store.rb --address='1770 Union St, San Francisco, CA 94123'`
+
+You must run this with at least an address or a zip code to get a response. You also must be connected to the internet. The default response will be plain text and return the distance in miles.
+
 ```
 Usage:
   find_store --address="<address>"
